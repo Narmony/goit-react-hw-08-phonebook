@@ -1,0 +1,44 @@
+{
+  "contacts": [
+    {
+      "name": "Alice",
+      "number": "123456",
+      "id": 1
+    },
+    {
+      "name": "Blade",
+      "number": "789012",
+      "id": 2
+    },
+    {
+      "name": "DeadPool",
+      "number": "345678",
+      "id": 3
+    },
+    {
+      "name": "Hitman",
+      "number": "9012345",
+      "id": 4
+    },
+    {
+      "name": "Loki",
+      "number": "678901",
+      "id": 5
+    },
+    {
+      "name": "Shiva",
+      "number": "234567",
+      "id": 6
+    },
+    {
+      "name": "Witcher",
+      "number": "8901234",
+      "id": 7
+    },
+    {
+      "name": "Thengil",
+      "number": "567890",
+      "id": 8
+    }
+  ]
+}
