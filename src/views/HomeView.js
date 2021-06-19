@@ -9,7 +9,7 @@ const styles = {
   },
   title: {
     fontWeight: 500,
-    fontSize: 48,
+    fontSize: 58,
     textAlign: 'center',
   },
 };
@@ -17,7 +17,7 @@ const styles = {
 const HomeView = () => (
   <div style={styles.container}>
     <h1 style={styles.title}>
-      Welcome{' '}
+      Welcome
       <span role="img" aria-label="Иконка приветствия">
         💁‍♀️
       </span>

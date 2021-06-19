@@ -2,6 +2,8 @@ import styles from './contactsForm.module.css';
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import contactsOperations from '../../redux/contacts/contacts-operations';
+import Button from 'react-bootstrap/Button';
+
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
@@ -64,9 +66,14 @@ class ContactsForm extends Component {
               title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
               required
             />
-            <button type="submit" className={styles.add_Btn}>
+            {/* <button type="submit" className={styles.add_Btn}> */}
+            <Button
+              type="submit"
+              variant="outline-dark"
+              className={styles.add_Btn}
+            >
               Add contact
-            </button>
+            </Button>
           </label>
         </div>
       </form>

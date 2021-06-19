@@ -1,65 +1,67 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-// import AppBar from './components/AppBar';
-import AppBar from './components/AppBar.js'
-import ContactsView from './views/ContactsView';
-import HomeView from './views/HomeView';
-import RegisterView from './views/RegisterView';
-import LoginView from './views/LoginView';
+import React, { Component, Suspense, lazy } from 'react';
+import { Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
+import { authOperations } from './redux/auth';
+
+import AppBar from './components/AppBar.js';
 import Container from './components/Container';
 
-const App =()=> 
- (
+const HomeView = lazy(() =>
+  import('./views/HomeView' /* webpackChunkName: "HomeView" */),
+);
+
+const RegisterView = lazy(() =>
+  import('./views/RegisterView' /* webpackChunkName: "RegisterView" */),
+);
+
+const LoginView = lazy(() =>
+  import('./views/LoginView' /* webpackChunkName: "LoginView" */),
+);
+
+const ContactsView = lazy(() =>
+  import('./views/ContactsView' /* webpackChunkName: "ContactsView" */),
+);
+
+class App extends Component {
+  componentDidMount() {
+    this.props.onGetCurrentUser();
+  }
+  render() {
+    return (
       <Container>
         <AppBar />
 
-        <Switch>
-          <Route exact path="/" component={HomeView} />
-          <Route path="/register" component={RegisterView} />
-          <Route path="/login" component={LoginView} />
-          <Route path="/contacts" component={ContactsView} />
-        </Switch>
+        <Suspense fallback={<p>Download...</p>}>
+          <Switch>
+            <PublicRoute exact path="/" component={HomeView} />
+            <PublicRoute
+              path="/register"
+              restricted
+              redirectTo="/contacts"
+              component={RegisterView}
+            />
+            <PublicRoute
+              path="/login"
+              restricted
+              redirectTo="/contacts"
+              component={LoginView}
+            />
+            <PrivateRoute
+              path="/contacts"
+              redirectTo="/login"
+              component={ContactsView}
+            />
+          </Switch>
+        </Suspense>
       </Container>
     );
+  }
+}
 
+const mapDispatchToProps = {
+  onGetCurrentUser: authOperations.getCurrentUser,
+};
 
-
-export default App;
-
-
-
-// import { Component } from 'react';
-// import { connect } from 'react-redux';
-// import ContactsForm from './components/ContactsForm';
-// import ContactsList from './components/ContactsList';
-// import Filter from './components/Filter';
-// import contactsOperations from './redux/contacts/contacts-operations';
-// import contactsSelectors from './redux/contacts/contacts-selectors';
-// import './styles.css';
-// // import { v4 as uuidv4 } from 'uuid';
-
-// class App extends Component {
-//   componentDidMount() {
-//     this.props.fetchContacts();
-//   }
-
-//   render() {
-//     return (
-//       <div className="app">
-//         <ContactsForm />
-//         {this.props.isLoadingContacts && <h1>Loading...</h1>}
-//         <Filter />
-//         <ContactsList />
-//       </div>
-//     );
-//   }
-// }
-
-// const mapStateToProps = state => ({
-//   isLoadingContacts: contactsSelectors.getLoading(state),
-// });
-
-// const mapDispatchToProps = dispatch => ({
-//   fetchContacts: () => dispatch(contactsOperations.fetchContacts()),
-// });
-// export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

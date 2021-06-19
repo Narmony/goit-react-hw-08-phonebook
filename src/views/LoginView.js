@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { authOperations } from '../redux/auth';
+import Button from 'react-bootstrap/Button';
 
 const styles = {
   form: {
@@ -61,13 +64,17 @@ class LoginView extends Component {
             />
           </label>
 
-          <button type="submit">Sign in</button>
+          <Button type="submit" variant="outline-dark">
+            Sign in
+          </Button>
         </form>
       </div>
     );
   }
 }
 
+const mapDispatchToProps = {
+  onLogin: authOperations.logIn,
+};
 
-
-export default LoginView;
+export default connect(null, mapDispatchToProps)(LoginView);

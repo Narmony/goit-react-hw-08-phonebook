@@ -11,7 +11,8 @@ import {
   fetchContactsError,
 } from './contacts-actions';
 
-axios.defaults.baseURL = 'http://localhost:4040';
+// axios.defaults.baseURL = 'http://localhost:4040';
+// axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
 const fetchContacts = () => async dispatch => {
   dispatch(fetchContactsRequest());
@@ -20,7 +21,7 @@ const fetchContacts = () => async dispatch => {
     const { data } = await axios.get('/contacts');
     dispatch(fetchContactsSuccess(data));
   } catch (error) {
-    dispatch(fetchContactsError(error));
+    dispatch(fetchContactsError(error.message));
   }
 };
 
@@ -35,7 +36,7 @@ const addContact =
       const { data } = await axios.post('/contacts', contact);
       dispatch(addContactSuccess(data));
     } catch (error) {
-      dispatch(addContactError(error));
+      dispatch(addContactError(error.message));
     }
   };
 
@@ -46,7 +47,7 @@ const deleteContact = contactId => async dispatch => {
     await axios.delete(`/contacts/${contactId}`);
     dispatch(deleteContactSuccess(contactId));
   } catch (error) {
-    dispatch(deleteContactError(error));
+    dispatch(deleteContactError(error.message));
   }
 };
 const contactsOperations = { fetchContacts, addContact, deleteContact };

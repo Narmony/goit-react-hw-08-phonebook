@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import { authOperations } from '../redux/auth';
+import Button from 'react-bootstrap/Button';
 
 const styles = {
   form: {
@@ -73,12 +75,16 @@ class RegisterView extends Component {
             />
           </label>
 
-          <button type="submit">Register</button>
+          <Button type="submit" variant="outline-dark">
+            Register
+          </Button>
         </form>
       </div>
     );
   }
 }
+const mapDispatchToProps = {
+  onRegister: authOperations.register,
+};
 
-
-export default RegisterView;
+export default connect(null, mapDispatchToProps)(RegisterView);

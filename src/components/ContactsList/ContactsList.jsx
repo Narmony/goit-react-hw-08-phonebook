@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import contactsOperations from '../../redux/contacts/contacts-operations';
 import * as contactSelectors from '../../redux/contacts/contacts-selectors';
+import Button from 'react-bootstrap/Button';
 
 const ContactsList = ({ contacts, onDelete }) => {
   return (
@@ -13,7 +14,14 @@ const ContactsList = ({ contacts, onDelete }) => {
           <li className={styles.contact_item} key={id}>
             <span className={styles.name}>{name}</span>
             <span className={styles.number}>{number}</span>
-            <button onClick={() => onDelete(id)}>Delete</button>
+            <Button
+              variant="outline-danger"
+              size="sm"
+              className={styles.button}
+              onClick={() => onDelete(id)}
+            >
+              Delete
+            </Button>
           </li>
         ))}
       </ul>
@@ -36,7 +44,7 @@ ContactsList.propTypes = {
 //   contacts: getVisibleContacts(contacts, filter),
 // });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   contacts: contactSelectors.getVisibleContacts(state),
 });
 
