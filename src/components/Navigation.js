@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { authSelectors } from '../redux/auth';
-import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const styles = {
   link: {
@@ -21,27 +19,25 @@ const styles = {
   },
 };
 
-const Navigation = ({ isAuthenticated }) => (
-  <nav>
-    <NavLink to="/" exact style={styles.link} activeStyle={styles.activeLink}>
-      Home
-    </NavLink>
+export default function Navigation() {
+  const isLoggedIn = useSelector(authSelectors.getIsAuthenticated);
 
-    {isAuthenticated && (
-      <NavLink
-        to="/contacts"
-        exact
-        style={styles.link}
-        activeStyle={styles.activeLink}
-      >
-        Contacts
+  return (
+    <nav>
+      <NavLink to="/" exact style={styles.link} activeStyle={styles.activeLink}>
+        Home
       </NavLink>
-    )}
-  </nav>
-);
 
-const mapStateToProps = state => ({
-  isAuthenticated: authSelectors.getIsAuthenticated(state),
-});
-
-export default connect(mapStateToProps)(Navigation);
+      {isLoggedIn && (
+        <NavLink
+          to="/contacts"
+          exact
+          style={styles.link}
+          activeStyle={styles.activeLink}
+        >
+          Contacts
+        </NavLink>
+      )}
+    </nav>
+  );
+}

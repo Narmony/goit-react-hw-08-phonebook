@@ -10,9 +10,8 @@ import {
   changeFilter,
   fetchContactsRequest,
   fetchContactsSuccess,
-  fetchContactsError
+  fetchContactsError,
 } from './contacts-actions';
-
 
 const checkName = (state, { payload }) => {
   const checkedName = state.map(contact => contact.name).includes(payload.name);
@@ -23,9 +22,8 @@ const checkName = (state, { payload }) => {
   return [...state, payload];
 };
 
-
 const contacts = createReducer([], {
-  [fetchContactsSuccess]: (state, {payload})=>payload,
+  [fetchContactsSuccess]: (state, { payload }) => payload,
   [addContactSuccess]: (state, { payload }) => checkName(state, { payload }),
   [deleteContactSuccess]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
